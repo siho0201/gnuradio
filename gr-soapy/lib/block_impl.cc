@@ -156,9 +156,9 @@ block_impl::block_impl(int direction,
                        const std::vector<std::string>& tune_args,
                        const std::vector<std::string>& other_settings)
     : d_direction(direction),
-      d_nchan(nchan),
       d_stream_args(stream_args),
-      d_channels(nchan)
+      d_channels(nchan),
+      d_nchan(nchan)
 {
     check_abi();
 
@@ -383,6 +383,7 @@ bool block_impl::stop()
 {
     if (d_stream) {
         std::lock_guard<std::mutex> l(d_device_mutex);
+        d_device->deactivateStream(d_stream);
         d_device->closeStream(d_stream);
         d_stream = nullptr;
     }

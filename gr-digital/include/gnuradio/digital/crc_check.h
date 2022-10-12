@@ -24,7 +24,7 @@ namespace digital {
  * \ingroup packet_operators_blk
  *
  * \details
- * The CRC append block receives a PDU containing a CRC at its end,
+ * The CRC check block receives a PDU containing a CRC at its end,
  * and checks whether the CRC is correct. The PDU is sent over the ok
  * or fail output ports according to the result of this check.
  * It can support any CRC whose size is a multiple of 8 bits between
@@ -36,7 +36,7 @@ public:
     typedef std::shared_ptr<crc_check> sptr;
 
     /*!
-     * \brief Build the CRC append block.
+     * \brief Build the CRC check block.
      *
      * \param num_bits CRC size in bits (must be a multiple of 8)
      * \param poly CRC polynomial, in MSB-first notation
@@ -47,7 +47,7 @@ public:
      * \param swap_endianness true if the CRC is stored as little-endian in the PDU,
        false if not
      * \param discard_crc If true, the CRC is removed from the PDU before sending
-       it to the output port. If false, the CRC is preserved in the outupt PDU.
+       it to the output port. If false, the CRC is preserved in the output PDU.
      * \param skip_header_bytes gives the number of header byte to skip in the CRC
        calculation
      */

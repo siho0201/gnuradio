@@ -36,12 +36,10 @@ GR_PYBIND_MAKE_OOT(howto
    gr::howto
    "${howto_python_files}")
 
-# copy in bindings .so file for use in QA test module
-add_custom_target(
-  copy_bindings_for_tests ALL
-  COMMAND
-    ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/*.so"
-    ${CMAKE_BINARY_DIR}/test_modules/gnuradio/howto/
-  DEPENDS howto_python)
+# copy bindings extension for use in QA test module
+add_custom_command(TARGET howto_python POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:howto_python>
+    ${PROJECT_BINARY_DIR}/test_modules/gnuradio/howto/
+)
 
 install(TARGETS howto_python DESTINATION ${GR_PYTHON_DIR}/gnuradio/howto COMPONENT pythonapi)

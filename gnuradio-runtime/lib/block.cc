@@ -365,7 +365,7 @@ long block::min_output_buffer(size_t i)
 void block::set_min_output_buffer(long min_output_buffer)
 {
     d_logger->info(
-        "set_min_output_buffer on block {:s} to {:d}", unique_id(), min_output_buffer);
+        "set_min_output_buffer on block {:d} to {:d}", unique_id(), min_output_buffer);
     for (int i = 0; i < output_signature()->max_streams(); i++) {
         set_min_output_buffer(i, min_output_buffer);
     }
@@ -1028,12 +1028,12 @@ void block::setup_pc_rpc()
 
 std::string block::identifier() const
 {
-    return d_name + "(" + std::to_string(d_unique_id) + ")";
+    return fmt::format("{}({})", d_name, d_unique_id);
 }
 
 std::ostream& operator<<(std::ostream& os, const block* m)
 {
-    os << "<block " << m->identifier() << ">";
+    os << fmt::format("<block {}>", m->identifier());
     return os;
 }
 

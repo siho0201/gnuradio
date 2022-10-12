@@ -111,10 +111,6 @@ void waterfall_sink_c_impl::initialize()
     if (qApp != NULL) {
         d_qApplication = qApp;
     } else {
-#if QT_VERSION >= 0x040500 && QT_VERSION < 0x050000
-        std::string style = prefs::singleton()->get_string("qtgui", "style", "raster");
-        QApplication::setGraphicsSystem(QString(style.c_str()));
-#endif
         d_qApplication = new QApplication(d_argc, &d_argv);
     }
 
@@ -484,7 +480,7 @@ void waterfall_sink_c_impl::handle_pdus(pmt::pmt_t msg)
         int j = 0;
         size_t min = 0;
         size_t max = std::min(d_fftsize, static_cast<int>(len));
-        for (size_t i = 0; j < d_nrows; i += stride) {
+        while (j < d_nrows) {
             // Clear residbufs if len < d_fftsize
             std::fill_n(d_residbufs[d_nconnections].data(), d_fftsize, 0x00);
 
